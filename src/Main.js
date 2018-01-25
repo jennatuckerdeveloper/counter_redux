@@ -5,15 +5,14 @@ import { connect } from 'react-redux'
 
 import * as actions from './actions.js'
 
-import Counter from './Counter.js'
-
 class Store extends Component {
   render () {
     const currentCount = this.props.currentCount
     return (
      <div>
       {currentCount}
-      <Counter increment={this.props.action.increment} decrement={this.props.action.decrement}/>
+      <button id='add' onClick={()=> this.props.action.increment()}>+</button>
+      <button id='subtract' onClick={()=>this.props.action.decrement()}>-</button>
      </div>
     )
   }
