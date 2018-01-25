@@ -1,22 +1,36 @@
 import React, { Component } from 'react'
 import './App.css'
-import { createStore } from 'redux'
-import rootReducer from './reducer.js'
 
-import { Provider } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-import Main from './Main.js'
+import * as actions from './actions.js'
 
-const storeInstance = createStore(rootReducer)
 
 class App extends Component {
   render () {
+    const currentCount = this.props.currentCount
     return (
-      <Provider store={storeInstance}>
-        <Main />
-      </Provider>
+      <div>
+      {currentCount}
+      <button id='add' onClick={()=> this.props.action.increment()}>+</button>
+      <button id='subtract' onClick={()=>this.props.action.decrement()}>-</button>
+
+     </div>
     )
   }
 }
 
-export default App
+function mapStateToProps (state, prop) {
+  return {
+      currentCount: state
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      action: bindActionCreators(actions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
